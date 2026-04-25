@@ -1,0 +1,124 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;900&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  background-color: #1a1b26;
+  color: #a9b1d6;
+  font-family: 'Inter', system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #1a1b26;
+}
+::-webkit-scrollbar-thumb {
+  background: #7aa2f7;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #89b4fa;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+@layer components {
+  .neon-text {
+    color: #7aa2f7;
+    text-shadow: 0 0 10px #7aa2f7, 0 0 20px #7aa2f7, 0 0 40px #7aa2f7;
+  }
+
+  .neon-border {
+    border: 1px solid #7aa2f7;
+    box-shadow: 0 0 20px rgba(122, 162, 247, 0.3), inset 0 0 20px rgba(122, 162, 247, 0.05);
+  }
+
+  .glass-card {
+    background: rgba(36, 40, 59, 0.85);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(122, 162, 247, 0.15);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(122, 162, 247, 0.05);
+  }
+
+  .btn-neon {
+    @apply px-6 py-3 font-mono font-semibold text-sm tracking-widest uppercase
+           bg-transparent rounded transition-all duration-300 cursor-pointer;
+    border: 1px solid #7aa2f7;
+    color: #7aa2f7;
+
+    &:hover {
+      background: #7aa2f7;
+      color: #1a1b26;
+      box-shadow: 0 0 25px rgba(122, 162, 247, 0.6);
+    }
+  }
+
+  .btn-pink {
+    @apply px-6 py-3 font-mono font-semibold text-sm tracking-widest uppercase
+           bg-transparent rounded transition-all duration-300 cursor-pointer;
+    border: 1px solid #f7768e;
+    color: #f7768e;
+
+    &:hover {
+      background: #f7768e;
+      color: #1a1b26;
+      box-shadow: 0 0 25px rgba(247, 118, 142, 0.6);
+    }
+  }
+
+  .btn-green {
+    @apply px-6 py-3 font-mono font-semibold text-sm tracking-widest uppercase
+           bg-transparent rounded transition-all duration-300 cursor-pointer;
+    border: 1px solid #9ece6a;
+    color: #9ece6a;
+
+    &:hover {
+      background: #9ece6a;
+      color: #1a1b26;
+      box-shadow: 0 0 25px rgba(158, 206, 106, 0.6);
+    }
+  }
+
+  .input-neon {
+    @apply w-full rounded px-4 py-3 font-mono text-sm transition-all duration-300;
+    background: #1a1b26;
+    border: 1px solid rgba(86, 95, 137, 0.5);
+    color: #a9b1d6;
+
+    &::placeholder {
+      color: #565f89;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: #7aa2f7;
+      box-shadow: 0 0 15px rgba(122, 162, 247, 0.2);
+    }
+  }
+}

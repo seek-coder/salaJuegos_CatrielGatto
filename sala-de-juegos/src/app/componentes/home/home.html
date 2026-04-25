@@ -1,0 +1,96 @@
+<section class="min-h-screen px-6 py-16">
+  <div class="max-w-6xl mx-auto">
+
+    <div class="text-center mb-20">
+
+      <div class="text-8xl mb-6 animate-float inline-block cursor-default">🕹️</div>
+
+      <h1 class="font-mono text-4xl md:text-6xl font-black tracking-widest mb-4 cursor-default"
+          style="color: #7aa2f7; text-shadow: 0 0 30px rgba(122,162,247,0.5), 0 0 60px rgba(122,162,247,0.2) cursor-default">
+        El Cyber de Cato
+      </h1>
+      <p class="font-mono text-sm md:text-base tracking-[0.3em] uppercase mb-2" style="color: #a9b1d6 cursor-default">
+        Sala de Juegos &mdash; UTN Programación IV 
+      </p>
+      <p class="text-sm font-mono" style="color: #565f89">
+        Recordando los viejos tiempos de los cybers del conurbano bonaerense.
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-4 justify-center mt-10">
+        <a routerLink="/registro" id="btn-registrarse-hero"
+           class="btn-neon px-8 py-4 text-base">
+          EMPEZAR AHORA
+        </a>
+        <a routerLink="/login" id="btn-login-hero"
+           class="btn-green px-8 py-4 text-base">
+          YA TENGO CUENTA
+        </a>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-3 gap-4 mb-20 max-w-2xl mx-auto">
+      <div class="glass-card p-4 text-center">
+        <div class="font-mono text-2xl font-bold" style="color: #7aa2f7">4</div>
+        <div class="font-mono text-xs tracking-widest uppercase mt-1" style="color: #565f89">Juegos</div>
+      </div>
+      <div class="glass-card p-4 text-center">
+        <div class="font-mono text-2xl font-bold" style="color: #f7768e">∞</div>
+        <div class="font-mono text-xs tracking-widest uppercase mt-1" style="color: #565f89">Partidas</div>
+      </div>
+      <div class="glass-card p-4 text-center">
+        <div class="font-mono text-2xl font-bold" style="color: #e0af68">1</div>
+        <div class="font-mono text-xs tracking-widest uppercase mt-1" style="color: #565f89">Ranking</div>
+      </div>
+    </div>
+
+    <div class="mb-10">
+      <h2 class="font-mono text-xl font-bold tracking-widest uppercase mb-8 text-center" style="color: #a9b1d6">
+        <span style="color: #7aa2f7">// </span> Juegos disponibles
+      </h2>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        @for (juego of juegos; track juego.nombre) {
+          <div class="glass-card p-6 flex flex-col gap-4 group relative overflow-hidden
+                      transition-all duration-500 cursor-pointer"
+               style="hover:border-color: rgba(122,162,247,0.4)"
+               [id]="'card-' + juego.nombre.toLowerCase().replace(' ', '-')">
+
+            @if (!juego.disponible) {
+              <span class="absolute top-3 right-3 font-mono text-xs px-2 py-0.5 rounded tracking-widest"
+                    style="background: #1a1b26; color: #565f89; border: 1px solid rgba(86,95,137,0.3)">
+                Próximamente
+              </span>
+            }
+
+            <div class="text-5xl group-hover:scale-110 transition-transform duration-300">
+              {{ juego.icono }}
+            </div>
+
+            <div>
+              <h3 class="font-mono font-bold text-lg mb-2 tracking-wide" style="color: #a9b1d6">
+                {{ juego.nombre }}
+              </h3>
+              <p class="text-sm leading-relaxed" style="color: #565f89">
+                {{ juego.descripcion }}
+              </p>
+            </div>
+
+            <div class="h-px w-0 group-hover:w-full transition-all duration-500"
+                 style="background: linear-gradient(90deg, #7aa2f7, transparent)"></div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="glass-card p-6 text-center mt-12"
+         style="border-color: rgba(247,118,142,0.3)">
+      <p class="font-mono text-xs tracking-widest" style="color: #565f89">
+        ⚡ SPRINT 1 &nbsp;|&nbsp; Los juegos se habilitarán en sprints posteriores &nbsp;|&nbsp;
+        <a routerLink="/quien-soy" class="transition-colors" style="color: #f7768e">
+          Conocé más sobre el desrrollador →
+        </a>
+      </p>
+    </div>
+
+  </div>
+</section>

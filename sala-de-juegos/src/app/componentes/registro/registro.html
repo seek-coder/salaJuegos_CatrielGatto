@@ -1,0 +1,50 @@
+<section class="min-h-screen flex items-center justify-center px-6 py-16">
+  <div class="w-full max-w-md">
+
+    <div class="text-center mb-10">
+      <div class="text-5xl mb-4">🎮</div>
+      <p class="font-mono text-xs tracking-[0.4em] uppercase mb-2" style="color: #7aa2f7">// Nuevo Jugador</p>
+      <h1 class="font-mono text-3xl font-black tracking-widest" style="color: #a9b1d6">REGISTRARSE</h1>
+    </div>
+
+    <div class="glass-card p-8" style="border-color: rgba(118, 135, 247, 0.2)">
+      <form (ngSubmit)="onSubmit()" id="registro-form" #registroForm="ngForm">
+
+        <div class="mb-5">
+          <label for="registro-nombre" class="block font-mono text-xs tracking-widest uppercase mb-2" style="color: #565f89">Nombre de usuario</label>
+          <input id="registro-nombre" type="text" [(ngModel)]="nombre" name="nombre" required placeholder="CyberKnight42" class="input-neon" autocomplete="username">
+        </div>
+
+        <div class="mb-5">
+          <label for="registro-email" class="block font-mono text-xs tracking-widest uppercase mb-2" style="color: #565f89">Email</label>
+          <input id="registro-email" type="email" [(ngModel)]="email" name="email" required placeholder="jugador&#64;example.com" class="input-neon" autocomplete="email">
+        </div>
+
+        <div class="mb-5">
+          <label for="registro-password" class="block font-mono text-xs tracking-widest uppercase mb-2" style="color: #565f89">Contraseña</label>
+          <input id="registro-password" type="password" [(ngModel)]="password" name="password" required placeholder="••••••••" class="input-neon" autocomplete="new-password">
+        </div>
+
+        <div class="mb-8">
+          <label for="registro-confirmar" class="block font-mono text-xs tracking-widest uppercase mb-2" style="color: #565f89">Confirmar contraseña</label>
+          <input id="registro-confirmar" type="password" [(ngModel)]="confirmarPassword" name="confirmarPassword" required placeholder="••••••••" class="input-neon" autocomplete="new-password">
+        </div>
+
+        <button type="submit" id="registro-submit" class="btn-neon w-full text-base py-4">CREAR CUENTA</button>
+      </form>
+
+      <div class="flex items-center gap-4 my-6">
+        <div class="flex-1 h-px" style="background: rgba(86,95,137,0.3)"></div>
+        <span class="font-mono text-xs" style="color: #565f89">o</span>
+        <div class="flex-1 h-px" style="background: rgba(86,95,137,0.3)"></div>
+      </div>
+
+      <p class="text-center font-mono text-sm" style="color: #565f89">
+        ¿Ya tenés cuenta?
+        <a routerLink="/login" id="link-a-login" class="transition-colors ml-1" style="color: #9ece6a">Ingresar →</a>
+      </p>
+    </div>
+
+    <p class="text-center font-mono text-xs mt-6 tracking-widest" style="color: #565f89">⚡ Autenticación Supabase — Sprint 2</p>
+  </div>
+</section>

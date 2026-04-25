@@ -1,0 +1,144 @@
+<section class="min-h-screen px-6 py-16">
+  <div class="max-w-4xl mx-auto">
+
+    <div class="text-center mb-16">
+      <p class="font-mono text-xs tracking-[0.4em] uppercase mb-3" style="color: #7aa2f7">// Perfil del Alumno</p>
+      <h1 class="font-mono text-3xl md:text-5xl font-black tracking-widest" style="color: #a9b1d6">QUIÉN SOY</h1>
+    </div>
+
+    @if (loading()) {
+      <div class="flex flex-col items-center justify-center gap-6 py-32">
+        <div class="w-16 h-16 rounded-full animate-spin" style="border: 4px solid rgba(122,162,247,0.2); border-top-color: #7aa2f7"></div>
+        <p class="font-mono text-sm tracking-widest" style="color: #565f89">Conectando a GitHub API...</p>
+      </div>
+    }
+
+    @if (error()) {
+      <div class="glass-card p-8 text-center" style="border-color: rgba(247,118,142,0.3)">
+        <div class="text-4xl mb-4">⚠️</div>
+        <p class="font-mono text-sm tracking-widest" style="color: #f7768e">Error al conectar con la API de GitHub</p>
+        <p class="font-mono text-xs mt-2" style="color: #565f89">Verificá tu conexión a internet</p>
+      </div>
+    }
+
+    @if (profile(); as p) {
+      <div class="grid md:grid-cols-3 gap-8">
+
+        <div class="md:col-span-1 flex flex-col gap-6">
+
+          <div class="glass-card p-6 flex flex-col items-center text-center gap-4">
+            <div class="relative">
+              <img [src]="p.avatar_url" [alt]="p.name || p.login"
+                   class="w-32 h-32 rounded-full object-cover"
+                   style="border: 3px solid #7aa2f7; box-shadow: 0 0 25px rgba(122,162,247,0.4)">
+              <span class="absolute bottom-2 right-2 w-4 h-4 rounded-full border-2"
+                    style="background: #9ece6a; border-color: #1a1b26; box-shadow: 0 0 10px rgba(158,206,106,0.6)"></span>
+            </div>
+            <div>
+              <h2 class="font-mono font-bold text-xl tracking-wide" style="color: #a9b1d6">{{ p.name || p.login }}</h2>
+              <a [href]="p.html_url" target="_blank" class="font-mono text-sm transition-colors" style="color: #7aa2f7">&#64;{{ p.login }}</a>
+            </div>
+            @if (p.bio) {
+              <p class="text-sm text-center leading-relaxed pt-4" style="color: #a9b1d6; border-top: 1px solid rgba(86,95,137,0.3)">Estudiante de programación y Analista de datos</p>
+            }
+            @if (p.location) {
+              <p class="font-mono text-xs" style="color: #565f89">📍 {{ p.location }}</p>
+            }
+          </div>
+
+          <div class="glass-card p-5 grid grid-cols-3 gap-3">
+            <div class="text-center">
+              <div class="font-mono text-xl font-bold" style="color: #7aa2f7">{{ p.public_repos }}</div>
+              <div class="font-mono text-xs tracking-wide mt-1" style="color: #565f89">Repos</div>
+            </div>
+            <div class="text-center" style="border-left: 1px solid rgba(86,95,137,0.3); border-right: 1px solid rgba(86,95,137,0.3)">
+              <div class="font-mono text-xl font-bold" style="color: #f7768e">{{ p.followers }}</div>
+              <div class="font-mono text-xs tracking-wide mt-1" style="color: #565f89">Seguidores</div>
+            </div>
+            <div class="text-center">
+              <div class="font-mono text-xl font-bold" style="color: #e0af68">{{ p.following }}</div>
+              <div class="font-mono text-xs tracking-wide mt-1" style="color: #565f89">Siguiendo</div>
+            </div>
+          </div>
+
+          @if (p.created_at) {
+            <div class="glass-card p-4 text-center">
+              <p class="font-mono text-xs tracking-widest uppercase" style="color: #565f89">GitHub desde</p>
+              <p class="font-mono text-sm mt-1" style="color: #a9b1d6">{{ formatDate(p.created_at) }}</p>
+            </div>
+          }
+        </div>
+
+        <div class="md:col-span-2 flex flex-col gap-6">
+
+          <div class="glass-card p-7">
+            <h3 class="font-mono text-xs tracking-[0.3em] uppercase mb-4" style="color: #7aa2f7">// Sobre el Alumno</h3>
+            <p class="leading-relaxed" style="color: #a9b1d6">
+              Estudiante de en la UTN. Analista de datos.
+              La filosofía del pórtico es mi guía, la lógica mi brújula y los videojuegos mi pasión.
+            </p>
+          </div>
+
+          <div class="glass-card p-7" style="border-color: rgba(247,118,142,0.35)">
+            <h3 class="font-mono text-xs tracking-[0.3em] uppercase mb-1" style="color: #f7768e">// Juego Propio</h3>
+            <div class="flex items-center gap-3 mb-6">
+              <span class="text-4xl animate-float inline-block">♞</span>
+              <div>
+                <h4 class="font-mono font-black text-2xl tracking-widest" style="color: #a9b1d6">PATH OF THE KNIGHT</h4>
+                <p class="font-mono text-xs tracking-widest" style="color: #f7768e">El Camino del Caballero</p>
+              </div>
+            </div>
+            <div class="flex flex-col gap-4">
+              <div>
+                <p class="font-mono text-xs tracking-widest uppercase mb-2" style="color: #565f89">¿De qué trata?</p>
+                <p class="text-sm leading-relaxed" style="color: #a9b1d6">
+                  Un juego de <strong style="color: #a9b1d6">lógica y estrategia</strong> en un tablero 8×8.
+                  Controlás una única pieza: el <strong style="color: #f7768e">Caballo de Ajedrez</strong>.
+                  Tu objetivo es recolectar <span class="font-mono" style="color: #e0af68">paquetes de datos</span> que
+                  aparecen aleatoriamente, pero hay una trampa...
+                </p>
+              </div>
+              <div class="rounded p-4" style="background: rgba(26,27,38,0.6); border: 1px solid rgba(247,118,142,0.25)">
+                <p class="font-mono text-xs tracking-widest uppercase mb-2" style="color: #f7768e">⚠ La trampa</p>
+                <p class="text-sm leading-relaxed" style="color: #a9b1d6">
+                  Cada vez que saltás de una casilla, la que acabas de dejar
+                  <strong style="color: #f7768e">desaparece</strong> — se convierte en lava.
+                  El juego termina cuando te quedás sin casillas legales a las que saltar [W.I.P. --- Tendiente a cambios]
+                </p>
+              </div>
+              <div class="grid grid-cols-2 gap-4">
+                <div class="rounded p-3" style="background: rgba(26,27,38,0.6); border: 1px solid rgba(158,206,106,0.25)">
+                  <p class="font-mono text-xs tracking-widest mb-2" style="color: #9ece6a">✓ VICTORIA</p>
+                  <p class="text-xs" style="color: #a9b1d6">Recolectás todos los paquetes del tablero sin quedarte encerrado.</p>
+                </div>
+                <div class="rounded p-3" style="background: rgba(26,27,38,0.6); border: 1px solid rgba(247,118,142,0.25)">
+                  <p class="font-mono text-xs tracking-widest mb-2" style="color: #f7768e">✗ DERROTA</p>
+                  <p class="text-xs" style="color: #a9b1d6">No tenés movimientos legales disponibles y quedaron paquetes sin recolectar.</p>
+                </div>
+              </div>
+              <div class="pt-4" style="border-top: 1px solid rgba(86,95,137,0.3)">
+                <p class="font-mono text-xs tracking-widest uppercase mb-2" style="color: #565f89">🏆 Ranking Global</p>
+                <p class="text-sm" style="color: #a9b1d6">
+                  Cada partida guarda en Supabase la cantidad de paquetes recolectados,
+                  el tiempo y el usuario. Los mejores puntajes entran al
+                  <span class="font-mono" style="color: #e0af68">Hall of Fame</span>.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-card p-5">
+            <h3 class="font-mono text-xs tracking-[0.3em] uppercase mb-4" style="color: #565f89">// Stack del Proyecto</h3>
+            <div class="flex flex-wrap gap-2">
+              @for (tech of ['Angular 21', 'TypeScript', 'TailwindCSS', 'Supabase', 'GitHub API', 'Signals', 'RxJS']; track tech) {
+                <span class="font-mono text-xs px-3 py-1 rounded" style="border: 1px solid rgba(86,95,137,0.4); color: #a9b1d6; background: rgba(26,27,38,0.5)">{{ tech }}</span>
+              }
+            </div>
+          </div>
+
+        </div>
+      </div>
+    }
+
+  </div>
+</section>

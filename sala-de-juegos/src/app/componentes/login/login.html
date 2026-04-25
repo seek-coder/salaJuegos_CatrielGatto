@@ -1,0 +1,69 @@
+<section class="min-h-screen flex items-center justify-center px-6 py-16">
+  <div class="w-full max-w-md">
+
+    <div class="text-center mb-10">
+      <div class="text-5xl mb-4">🔐</div>
+      <p class="font-mono text-xs tracking-[0.4em] uppercase mb-2" style="color: #9ece6a">// Acceso al Sistema</p>
+      <h1 class="font-mono text-3xl font-black tracking-widest" style="color: #a9b1d6">INGRESAR</h1>
+    </div>
+
+    <div class="glass-card p-8" style="border-color: rgba(158,206,106,0.2); box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(158,206,106,0.05)">
+      <form (ngSubmit)="onSubmit()" id="login-form" #loginForm="ngForm">
+
+        <div class="mb-5">
+          <label for="login-email"
+                 class="block font-mono text-xs tracking-widest uppercase mb-2" style="color: #565f89">
+            Email
+          </label>
+          <input id="login-email"
+                 type="email"
+                 [(ngModel)]="email"
+                 name="email"
+                 required
+                 placeholder="usuario&#64;example.com"
+                 class="input-neon"
+                 autocomplete="email">
+        </div>
+
+        <div class="mb-8">
+          <label for="login-password"
+                 class="block font-mono text-xs tracking-widest uppercase mb-2" style="color: #565f89">
+            Contraseña
+          </label>
+          <input id="login-password"
+                 type="password"
+                 [(ngModel)]="password"
+                 name="password"
+                 required
+                 placeholder="••••••••"
+                 class="input-neon"
+                 autocomplete="current-password">
+        </div>
+
+        <button type="submit"
+                id="login-submit"
+                class="btn-green w-full text-base py-4">
+          ACCEDER
+        </button>
+      </form>
+
+      <div class="flex items-center gap-4 my-6">
+        <div class="flex-1 h-px" style="background: rgba(86,95,137,0.3)"></div>
+        <span class="font-mono text-xs" style="color: #565f89">o</span>
+        <div class="flex-1 h-px" style="background: rgba(86,95,137,0.3)"></div>
+      </div>
+
+      <p class="text-center font-mono text-sm" style="color: #565f89">
+        ¿No tenés cuenta?
+        <a routerLink="/registro" id="link-a-registro"
+           class="transition-colors ml-1" style="color: #7aa2f7">
+          Registrarse →
+        </a>
+      </p>
+    </div>
+
+    <p class="text-center font-mono text-xs mt-6 tracking-widest" style="color: #565f89">
+      ⚡ Autenticación Supabase — Sprint 2
+    </p>
+  </div>
+</section>
