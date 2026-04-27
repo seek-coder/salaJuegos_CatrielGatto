@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-// Una interface es como una plantilla que define la estructura de un objeto.
+// Una interface es como una plantilla que define la estructura de un objeto. Lo uso acá para que el tipado sea consistente. Por ejemplo, si yo me equivocara y en lugar de un string pusiera un número en el nombre del juego, me saltaría un error de tipado y no me dejaría ejecutar el código. Lo que hace que TypeScript sea tan útil, es justamente eso. Evita errores antes de que se ejecute el código.
 interface Juego {
   nombre: string;
   descripcion: string;
@@ -11,6 +11,7 @@ interface Juego {
   color: string;
 }
 
+// Angular necesita saber qué otros componentes, directivas o pipes necesita para funcionar. En este caso, necesita RouterLink para poder navegar entre rutas. Por eso, lo importamos y lo pasamos como parámetro del decorador @Component en la propiedad imports.
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -48,7 +49,7 @@ export class HomeComponent {
     },
     {
       nombre: 'Path of the Knight',
-      descripcion: 'Controlá un caballo de ajedrez y recolectá paquetes sin quedarte sin casillas.',
+      descripcion: 'Controlá un caballo de ajedrez y recolectá paquetes de datos sin quedarte sin casillas.',
       icono: '♞',
       ruta: '/juegos/path-of-the-knight',
       disponible: false,

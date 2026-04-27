@@ -13,8 +13,8 @@ export class LoginComponent {
   email = '';
   password = '';
 
+  // TODO Sprint 2: inyectar SupabaseService y usar signInWithPassword()
   onSubmit() {
-
     console.log('Login con:', this.email);
   }
 }

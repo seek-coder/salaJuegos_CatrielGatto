@@ -15,8 +15,8 @@ export class RegistroComponent {
   password = '';
   confirmarPassword = '';
 
+  // TODO Sprint 2: inyectar SupabaseService y usar signUp()
   onSubmit() {
-
     console.log('Registro de:', this.nombre, this.email);
   }
 }

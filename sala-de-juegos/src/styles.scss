@@ -36,6 +36,7 @@ body::after {
   content: '';
   position: fixed;
   inset: 0;
+  // efecto tipo retro. 
   background: repeating-linear-gradient(
     0deg,
     transparent,

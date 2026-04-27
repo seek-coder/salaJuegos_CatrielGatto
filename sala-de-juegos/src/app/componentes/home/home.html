@@ -10,7 +10,7 @@
         El Cyber de Cato
       </h1>
       <p class="font-mono text-sm md:text-base tracking-[0.3em] uppercase mb-2" style="color: #a9b1d6 cursor-default">
-        Sala de Juegos &mdash; UTN Programación IV 
+        Sala de Juegos | UTN Programación IV 
       </p>
       <p class="text-sm font-mono" style="color: #565f89">
         Recordando los viejos tiempos de los cybers del conurbano bonaerense.
@@ -49,12 +49,14 @@
       </h2>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- @for es una directiva de Angular que reemplaza al ngFor. Lo que hace es recorrer el array 'juegos' y para cada juego renderiza un div con la clase 'glass-card' y los estilos correspondientes. El track es para optimizar el renderizado -->
         @for (juego of juegos; track juego.nombre) {
           <div class="glass-card p-6 flex flex-col gap-4 group relative overflow-hidden
                       transition-all duration-500 cursor-pointer"
                style="hover:border-color: rgba(122,162,247,0.4)"
                [id]="'card-' + juego.nombre.toLowerCase().replace(' ', '-')">
 
+            <!-- @if es una directiva de Angular que reemplaza al ngIf. Lo que hace es renderizar el span si la condicion es verdadera -->
             @if (!juego.disponible) {
               <span class="absolute top-3 right-3 font-mono text-xs px-2 py-0.5 rounded tracking-widest"
                     style="background: #1a1b26; color: #565f89; border: 1px solid rgba(86,95,137,0.3)">
@@ -85,7 +87,9 @@
     <div class="glass-card p-6 text-center mt-12"
          style="border-color: rgba(247,118,142,0.3)">
       <p class="font-mono text-xs tracking-widest" style="color: #565f89">
+        <!-- &nbsp es un espacio sin romper línea. Lo uso en lugar del carácter en sí porque sino al comprimir la pantalla se me salia de lugar. Este tipo de caracteres se llaman entidades html-->
         ⚡ SPRINT 1 &nbsp;|&nbsp; Los juegos se habilitarán en sprints posteriores &nbsp;|&nbsp;
+        <!-- routerLink es una directiva de Angular que reemplaza al href. Lo que hace es redirigir al usuario a la ruta especificada -->
         <a routerLink="/quien-soy" class="transition-colors" style="color: #f7768e">
           Conocé más sobre el desrrollador →
         </a>
