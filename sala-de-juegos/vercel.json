@@ -1,4 +1,7 @@
 {
+  "buildCommand": "",
+  "outputDirectory": "dist/sala-de-juegos/browser",
+  "installCommand": "npm install",
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ]

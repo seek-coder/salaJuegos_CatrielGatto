@@ -3,6 +3,6 @@
 // supabaseKey: es la anon/public key (NO la service_role key, esa es secreta).
 export const environment = {
   production: false,
-  supabaseUrl: 'https://nkrwixhchzpxqkvmndep.supabase.co',
+  supabaseUrl: 'https://hbakwoytglmxkjighcfl.supabase.co',
   supabaseKey: 'sb_publishable_YWi646f7WtT2ozZ2Vn4zsg_PVlT35RC',
 };

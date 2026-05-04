@@ -2,7 +2,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 
-// Para traer info. desde GitHub uso la API correspondiente, llamada "GitHub API". Este tipo de APIs que devuelven datos en formato JSON se llaman APIs REST.
+// interfaz para la api de github
 interface GitHubProfile {
   login: string;
   name: string;
@@ -27,7 +27,7 @@ interface GitHubProfile {
 })
 export class QuienSoyComponent implements OnInit {
   profile = signal<GitHubProfile | null>(null);
-  loading = signal(true);
+  loading = signal(true); // efecto de spinner
   error = signal(false);
 
   readonly githubUsername = 'seek-coder';
@@ -35,11 +35,6 @@ export class QuienSoyComponent implements OnInit {
 
   constructor(private http: HttpClient) {}
 
-  // En OnInit uso el método GET de HttpClient para obtener los datos de la API.
-  // El método subscribe() se usa para suscribirse a la respuesta de la API.
-  // En el caso de que la respuesta sea exitosa (next), se guarda el perfil y se detiene la carga.
-  // En el caso de que haya un error (error), se guarda el error y se detiene la carga.
-  // El método unsubscribe() se usa para cancelar la suscripción a la respuesta de la API.
   ngOnInit() {
     this.http.get<GitHubProfile>(this.apiUrl).subscribe({
       next: (data) => {

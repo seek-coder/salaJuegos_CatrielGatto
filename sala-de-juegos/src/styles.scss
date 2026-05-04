@@ -122,4 +122,14 @@ body::after {
       box-shadow: 0 0 15px rgba(122, 162, 247, 0.2);
     }
   }
+
+  // Estilo para botones deshabilitados (Sprint 2).
+  .btn-neon:disabled,
+  .btn-green:disabled,
+  .btn-pink:disabled {
+    opacity: 0.4;
+    pointer-events: none;
+    cursor: not-allowed;
+  }
 }
+

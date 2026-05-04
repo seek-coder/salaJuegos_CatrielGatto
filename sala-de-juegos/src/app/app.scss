@@ -2,3 +2,164 @@
   color: #7aa2f7 !important;
   text-shadow: 0 0 10px rgba(122, 162, 247, 0.5);
 }
+
+/* ═══ Decoraciones geométricas laterales ═══ */
+.side-decorations {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.geo {
+  position: absolute;
+  opacity: 0.15;
+  animation: geoFloat 10s ease-in-out infinite;
+}
+
+/* ── Lado izquierdo ── */
+
+// Círculo azul grande — arriba
+.geo--l1 {
+  top: 10%;
+  left: 15px;
+  opacity: 0.16;
+  animation-duration: 12s;
+}
+
+// Rombo rosa — medio-alto
+.geo--l2 {
+  top: 28%;
+  left: 100px;
+  opacity: 0.14;
+  animation-duration: 9s;
+  animation-delay: -2s;
+}
+
+// Cruz verde — centro
+.geo--l3 {
+  top: 50%;
+  left: 30px;
+  opacity: 0.13;
+  animation-duration: 11s;
+  animation-delay: -4s;
+}
+
+// Hexágono azul — medio-bajo
+.geo--l4 {
+  top: 60%;
+  left: 80px;
+  opacity: 0.15;
+  animation-duration: 14s;
+  animation-delay: -1s;
+}
+
+// Triángulo rosa — abajo
+.geo--l5 {
+  top: 82%;
+  left: 40px;
+  opacity: 0.12;
+  animation-duration: 10s;
+  animation-delay: -6s;
+}
+
+// Grid de puntos — entre medio
+.geo--l6 {
+  top: 38%;
+  left: 130px;
+  opacity: 0.22;
+  animation-duration: 16s;
+  animation-delay: -3s;
+}
+
+// Círculo verde extra
+.geo--l7 {
+  top: 72%;
+  left: 150px;
+  opacity: 0.12;
+  animation-duration: 13s;
+  animation-delay: -5s;
+}
+
+/* ── Lado derecho ── */
+
+// Círculo rosa grande — arriba
+.geo--r1 {
+  top: 6%;
+  right: 20px;
+  opacity: 0.15;
+  animation-duration: 13s;
+  animation-delay: -5s;
+}
+
+// Rombo azul — medio-alto
+.geo--r2 {
+  top: 26%;
+  right: 110px;
+  opacity: 0.14;
+  animation-duration: 10s;
+  animation-delay: -1s;
+}
+
+// Cruz azul — centro
+.geo--r3 {
+  top: 48%;
+  right: 35px;
+  opacity: 0.12;
+  animation-duration: 12s;
+  animation-delay: -7s;
+}
+
+// Hexágono verde — medio-bajo
+.geo--r4 {
+  top: 56%;
+  right: 85px;
+  opacity: 0.14;
+  animation-duration: 15s;
+  animation-delay: -3s;
+}
+
+// Triángulo azul — abajo
+.geo--r5 {
+  top: 78%;
+  right: 45px;
+  opacity: 0.12;
+  animation-duration: 11s;
+  animation-delay: -2s;
+}
+
+// Grid de puntos
+.geo--r6 {
+  top: 36%;
+  right: 140px;
+  opacity: 0.22;
+  animation-duration: 14s;
+  animation-delay: -4s;
+}
+
+// Rombo rosa extra
+.geo--r7 {
+  top: 70%;
+  right: 160px;
+  opacity: 0.12;
+  animation-duration: 12s;
+  animation-delay: -6s;
+}
+
+/* ═══ Animación ═══ */
+@keyframes geoFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+/* Ocultar en pantallas donde las figuras invadirían el contenido */
+@media (max-width: 1280px) {
+  .side-decorations {
+    display: none;
+  }
+}

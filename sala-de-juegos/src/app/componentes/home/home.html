@@ -6,25 +6,47 @@
       <div class="text-8xl mb-6 animate-float inline-block cursor-default">🕹️</div>
 
       <h1 class="font-mono text-4xl md:text-6xl font-black tracking-widest mb-4 cursor-default"
-          style="color: #7aa2f7; text-shadow: 0 0 30px rgba(122,162,247,0.5), 0 0 60px rgba(122,162,247,0.2) cursor-default">
+          style="color: #7aa2f7; text-shadow: 0 0 30px rgba(122,162,247,0.5), 0 0 60px rgba(122,162,247,0.2)">
         El Cyber de Cato
       </h1>
-      <p class="font-mono text-sm md:text-base tracking-[0.3em] uppercase mb-2" style="color: #a9b1d6 cursor-default">
+      <p class="font-mono text-sm md:text-base tracking-[0.3em] uppercase mb-2 cursor-default" style="color: #a9b1d6">
         Sala de Juegos | UTN Programación IV 
       </p>
       <p class="text-sm font-mono" style="color: #565f89">
         Recordando los viejos tiempos de los cybers del conurbano bonaerense.
       </p>
 
+      <!-- seccion dinamica con @if -->
       <div class="flex flex-col sm:flex-row gap-4 justify-center mt-10">
-        <a routerLink="/registro" id="btn-registrarse-hero"
-           class="btn-neon px-8 py-4 text-base">
-          EMPEZAR AHORA
-        </a>
-        <a routerLink="/login" id="btn-login-hero"
-           class="btn-green px-8 py-4 text-base">
-          YA TENGO CUENTA
-        </a>
+
+        <!-- estado: no logueado -->
+        @if (!authService.usuarioActual()) {
+          <a routerLink="/registro" id="btn-registrarse-hero"
+             class="btn-neon px-8 py-4 text-base">
+            EMPEZAR AHORA
+          </a>
+          <a routerLink="/login" id="btn-login-hero"
+             class="btn-green px-8 py-4 text-base">
+            YA TENGO CUENTA
+          </a>
+        }
+
+        <!-- estado: logueado -->
+        @else {
+          <div class="flex flex-col items-center gap-4">
+            <div class="glass-card px-8 py-4 inline-block">
+              <p class="font-mono text-xs tracking-widest uppercase mb-1" style="color: #565f89">Sesión iniciada como</p>
+              <p class="font-mono text-lg font-bold tracking-wide" style="color: #9ece6a">
+                {{ authService.usuarioActual()!.nombre }} {{ authService.usuarioActual()!.apellido }}
+              </p>
+              <p class="font-mono text-xs" style="color: #565f89">{{ authService.usuarioActual()!.email }}</p>
+            </div>
+            <button class="btn-pink px-8 py-3 text-sm" id="btn-cerrar-sesion" (click)="cerrarSesion()">
+              CERRAR SESIÓN
+            </button>
+          </div>
+        }
+
       </div>
     </div>
 
@@ -49,14 +71,14 @@
       </h2>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <!-- @for es una directiva de Angular que reemplaza al ngFor. Lo que hace es recorrer el array 'juegos' y para cada juego renderiza un div con la clase 'glass-card' y los estilos correspondientes. El track es para optimizar el renderizado -->
+        <!-- itero los juegos del componente -->
         @for (juego of juegos; track juego.nombre) {
           <div class="glass-card p-6 flex flex-col gap-4 group relative overflow-hidden
                       transition-all duration-500 cursor-pointer"
                style="hover:border-color: rgba(122,162,247,0.4)"
                [id]="'card-' + juego.nombre.toLowerCase().replace(' ', '-')">
 
-            <!-- @if es una directiva de Angular que reemplaza al ngIf. Lo que hace es renderizar el span si la condicion es verdadera -->
+            <!-- badge condicional -->
             @if (!juego.disponible) {
               <span class="absolute top-3 right-3 font-mono text-xs px-2 py-0.5 rounded tracking-widest"
                     style="background: #1a1b26; color: #565f89; border: 1px solid rgba(86,95,137,0.3)">
@@ -87,11 +109,11 @@
     <div class="glass-card p-6 text-center mt-12"
          style="border-color: rgba(247,118,142,0.3)">
       <p class="font-mono text-xs tracking-widest" style="color: #565f89">
-        <!-- &nbsp es un espacio sin romper línea. Lo uso en lugar del carácter en sí porque sino al comprimir la pantalla se me salia de lugar. Este tipo de caracteres se llaman entidades html-->
-        ⚡ SPRINT 1 &nbsp;|&nbsp; Los juegos se habilitarán en sprints posteriores &nbsp;|&nbsp;
-        <!-- routerLink es una directiva de Angular que reemplaza al href. Lo que hace es redirigir al usuario a la ruta especificada -->
+        <!-- separadores con non-breaking spaces para que no colapse el flex -->
+        ⚡ SPRINT 2 &nbsp;|&nbsp; Los juegos se habilitarán en sprints posteriores &nbsp;|&nbsp;
+        <!-- link interno a quien-soy -->
         <a routerLink="/quien-soy" class="transition-colors" style="color: #f7768e">
-          Conocé más sobre el desrrollador →
+          Conocé más sobre el desarrollador →
         </a>
       </p>
     </div>

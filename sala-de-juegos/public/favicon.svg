@@ -1,10 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <!-- Background -->
-  <rect width="64" height="64" rx="12" fill="#0a0e1a"/>
-  <!-- Neon border -->
-  <rect x="2" y="2" width="60" height="60" rx="10" fill="none" stroke="#00f5ff" stroke-width="2" opacity="0.8"/>
-  <!-- Chess knight (♞) shaped path approximation -->
-  <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle"
-        font-size="38" fill="#00f5ff"
-        style="filter: drop-shadow(0 0 6px #00f5ff)">♞</text>
+  <!-- Fondo oscuro estilo Tokyo Night -->
+  <rect width="64" height="64" rx="16" fill="#1a1b26"/>
+  <!-- Borde neón sutil -->
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="none" stroke="#7aa2f7" stroke-width="2"/>
+  <!-- Icono de Joystick central -->
+  <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" font-size="36">🕹️</text>
 </svg>
