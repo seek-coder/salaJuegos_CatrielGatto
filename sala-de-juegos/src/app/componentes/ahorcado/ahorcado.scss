@@ -1,0 +1,69 @@
+.letra-slot {
+  display: inline-block;
+  min-width: 32px;
+  text-align: center;
+  padding-bottom: 4px;
+  transition: color 0.3s ease;
+}
+
+.barra-progreso {
+  width: 100%;
+  height: 4px;
+  background: rgba(86, 95, 137, 0.3);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.barra-progreso-inner {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.4s ease, background 0.4s ease;
+}
+
+.teclado-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(42px, 1fr));
+  gap: 6px;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.tecla-btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 10px 0;
+  border-radius: 6px;
+  border: 1px solid rgba(86, 95, 137, 0.4);
+  background: rgba(26, 27, 38, 0.8);
+  color: #a9b1d6;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover:not(:disabled) {
+    border-color: #7aa2f7;
+    color: #7aa2f7;
+    box-shadow: 0 0 12px rgba(122, 162, 247, 0.2);
+    transform: translateY(-1px);
+  }
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+.tecla-correcta {
+  border-color: #9ece6a !important;
+  color: #9ece6a !important;
+  background: rgba(158, 206, 106, 0.1) !important;
+  opacity: 1 !important;
+}
+
+.tecla-incorrecta {
+  border-color: #f7768e !important;
+  color: #f7768e !important;
+  background: rgba(247, 118, 142, 0.1) !important;
+  opacity: 0.6 !important;
+}

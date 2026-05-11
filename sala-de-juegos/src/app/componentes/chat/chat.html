@@ -1,0 +1,59 @@
+<section class="min-h-screen px-6 py-16">
+  <div class="max-w-2xl mx-auto">
+
+    <div class="text-center mb-10">
+      <div class="text-5xl mb-4">💬</div>
+      <p class="font-mono text-xs tracking-[0.4em] uppercase mb-2" style="color: #9ece6a">// Comunidad</p>
+      <h1 class="font-mono text-3xl font-black tracking-widest" style="color: #a9b1d6">SALA DE CHAT</h1>
+    </div>
+
+    <div class="glass-card chat-contenedor" style="border-color: rgba(122,162,247,0.3)">
+
+      <div class="chat-mensajes" #contenedorMensajes>
+        @if (chatService.mensajes().length === 0) {
+          <div class="text-center py-12">
+            <div class="text-4xl mb-3">🌙</div>
+            <p class="font-mono text-sm" style="color: #565f89">
+              No hay mensajes todavía. ¡Sé el primero en escribir!
+            </p>
+          </div>
+        }
+
+        @for (mensaje of chatService.mensajes(); track mensaje.id ?? $index) {
+          <div class="mensaje-row" [class.mensaje-propio]="esMio(mensaje)" [class.mensaje-ajeno]="!esMio(mensaje)">
+            <div class="mensaje-burbuja" [class.burbuja-propia]="esMio(mensaje)" [class.burbuja-ajena]="!esMio(mensaje)">
+              @if (!esMio(mensaje)) {
+                <span class="mensaje-autor">{{ extraerNombre(mensaje.usuario) }}</span>
+              }
+              <p class="mensaje-texto">{{ mensaje.texto }}</p>
+              <span class="mensaje-hora">{{ formatearHora(mensaje.fecha) }} · {{ formatearFecha(mensaje.fecha) }}</span>
+            </div>
+          </div>
+        }
+      </div>
+
+      <div class="chat-input-area">
+        <div class="flex gap-3 items-end">
+          <input
+            type="text"
+            class="input-neon flex-1"
+            placeholder="Escribí tu mensaje..."
+            [value]="textoMensaje()"
+            (input)="textoMensaje.set($any($event.target).value)"
+            (keydown)="onKeydown($event)"
+            [disabled]="enviando()"
+            id="chat-input"
+            autocomplete="off">
+          <button class="btn-neon px-6 py-3"
+                  [disabled]="enviando() || !textoMensaje().trim()"
+                  (click)="enviar()"
+                  id="btn-enviar-chat">
+            @if (enviando()) { ... } @else { ENVIAR }
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>

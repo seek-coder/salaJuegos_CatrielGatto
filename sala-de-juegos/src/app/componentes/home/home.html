@@ -16,10 +16,8 @@
         Recordando los viejos tiempos de los cybers del conurbano bonaerense.
       </p>
 
-      <!-- seccion dinamica con @if -->
       <div class="flex flex-col sm:flex-row gap-4 justify-center mt-10">
 
-        <!-- estado: no logueado -->
         @if (!authService.usuarioActual()) {
           <a routerLink="/registro" id="btn-registrarse-hero"
              class="btn-neon px-8 py-4 text-base">
@@ -31,7 +29,6 @@
           </a>
         }
 
-        <!-- estado: logueado -->
         @else {
           <div class="flex flex-col items-center gap-4">
             <div class="glass-card px-8 py-4 inline-block">
@@ -71,37 +68,60 @@
       </h2>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <!-- itero los juegos del componente -->
         @for (juego of juegos; track juego.nombre) {
-          <div class="glass-card p-6 flex flex-col gap-4 group relative overflow-hidden
-                      transition-all duration-500 cursor-pointer"
-               style="hover:border-color: rgba(122,162,247,0.4)"
+          @if (juego.disponible) {
+            <a [routerLink]="juego.ruta"
+               class="glass-card p-6 flex flex-col gap-4 group relative overflow-hidden
+                       transition-all duration-500 cursor-pointer no-underline"
                [id]="'card-' + juego.nombre.toLowerCase().replace(' ', '-')">
 
-            <!-- badge condicional -->
-            @if (!juego.disponible) {
+              <div class="text-5xl group-hover:scale-110 transition-transform duration-300">
+                {{ juego.icono }}
+              </div>
+
+              <div>
+                <h3 class="font-mono font-bold text-lg mb-2 tracking-wide" style="color: #a9b1d6">
+                  {{ juego.nombre }}
+                </h3>
+                <p class="text-sm leading-relaxed" style="color: #565f89">
+                  {{ juego.descripcion }}
+                </p>
+              </div>
+
+              <div class="h-px w-0 group-hover:w-full transition-all duration-500"
+                   style="background: linear-gradient(90deg, #9ece6a, transparent)"></div>
+
+              <span class="absolute top-3 right-3 font-mono text-xs px-2 py-0.5 rounded tracking-widest"
+                    style="background: rgba(158,206,106,0.1); color: #9ece6a; border: 1px solid rgba(158,206,106,0.3)">
+                Jugar
+              </span>
+            </a>
+          } @else {
+            <div class="glass-card p-6 flex flex-col gap-4 group relative overflow-hidden
+                        transition-all duration-500 cursor-default opacity-60"
+                 [id]="'card-' + juego.nombre.toLowerCase().replace(' ', '-')">
+
               <span class="absolute top-3 right-3 font-mono text-xs px-2 py-0.5 rounded tracking-widest"
                     style="background: #1a1b26; color: #565f89; border: 1px solid rgba(86,95,137,0.3)">
                 Próximamente
               </span>
-            }
 
-            <div class="text-5xl group-hover:scale-110 transition-transform duration-300">
-              {{ juego.icono }}
+              <div class="text-5xl">
+                {{ juego.icono }}
+              </div>
+
+              <div>
+                <h3 class="font-mono font-bold text-lg mb-2 tracking-wide" style="color: #a9b1d6">
+                  {{ juego.nombre }}
+                </h3>
+                <p class="text-sm leading-relaxed" style="color: #565f89">
+                  {{ juego.descripcion }}
+                </p>
+              </div>
+
+              <div class="h-px" style="background: transparent"></div>
             </div>
-
-            <div>
-              <h3 class="font-mono font-bold text-lg mb-2 tracking-wide" style="color: #a9b1d6">
-                {{ juego.nombre }}
-              </h3>
-              <p class="text-sm leading-relaxed" style="color: #565f89">
-                {{ juego.descripcion }}
-              </p>
-            </div>
-
-            <div class="h-px w-0 group-hover:w-full transition-all duration-500"
-                 style="background: linear-gradient(90deg, #7aa2f7, transparent)"></div>
-          </div>
+          }
         }
       </div>
     </div>
@@ -109,9 +129,11 @@
     <div class="glass-card p-6 text-center mt-12"
          style="border-color: rgba(247,118,142,0.3)">
       <p class="font-mono text-xs tracking-widest" style="color: #565f89">
-        <!-- separadores con non-breaking spaces para que no colapse el flex -->
-        ⚡ SPRINT 2 &nbsp;|&nbsp; Los juegos se habilitarán en sprints posteriores &nbsp;|&nbsp;
-        <!-- link interno a quien-soy -->
+        ⚡ SPRINT 3 &nbsp;|&nbsp; Ahorcado, Mayor o Menor y Chat disponibles &nbsp;|&nbsp;
+        <a routerLink="/chat" class="transition-colors" style="color: #7aa2f7">
+          Ir al Chat →
+        </a>
+        &nbsp;|&nbsp;
         <a routerLink="/quien-soy" class="transition-colors" style="color: #f7768e">
           Conocé más sobre el desarrollador →
         </a>

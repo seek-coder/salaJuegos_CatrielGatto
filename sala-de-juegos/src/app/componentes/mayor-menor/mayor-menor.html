@@ -1,0 +1,98 @@
+<section class="min-h-screen px-6 py-16">
+  <div class="max-w-2xl mx-auto">
+
+    <div class="text-center mb-10">
+      <div class="text-5xl mb-4">🃏</div>
+      <p class="font-mono text-xs tracking-[0.4em] uppercase mb-2" style="color: #9ece6a">// Juego</p>
+      <h1 class="font-mono text-3xl font-black tracking-widest" style="color: #a9b1d6">MAYOR O MENOR</h1>
+    </div>
+
+    <div class="flex flex-wrap justify-center gap-4 mb-8">
+      <div class="glass-card px-4 py-2 text-center">
+        <span class="font-mono text-xs tracking-widest uppercase" style="color: #565f89">Aciertos</span>
+        <div class="font-mono text-xl font-bold" style="color: #9ece6a">{{ aciertos() }}</div>
+      </div>
+      <div class="glass-card px-4 py-2 text-center">
+        <span class="font-mono text-xs tracking-widest uppercase" style="color: #565f89">Restantes</span>
+        <div class="font-mono text-xl font-bold" style="color: #7aa2f7">{{ cartasRestantes }}</div>
+      </div>
+    </div>
+
+    <div class="glass-card p-8 mb-8" style="border-color: rgba(122,162,247,0.3)">
+
+      <div class="cartas-container">
+        @if (cartaActual()) {
+          <div class="carta-wrapper">
+            <div class="carta" [class.carta-roja]="esRoja(cartaActual()!)">
+              <span class="carta-valor-top">{{ cartaActual()!.nombre }}</span>
+              <span class="carta-palo-centro">{{ cartaActual()!.emoji }}</span>
+              <span class="carta-valor-bottom">{{ cartaActual()!.nombre }}</span>
+            </div>
+            <span class="font-mono text-xs tracking-widest mt-2 block text-center" style="color: #565f89">ACTUAL</span>
+          </div>
+        }
+
+        <div class="carta-separador">
+          <span class="font-mono text-2xl" style="color: #565f89">→</span>
+        </div>
+
+        @if (revelando() && cartaSiguiente()) {
+          <div class="carta-wrapper carta-reveal">
+            <div class="carta" [class.carta-roja]="esRoja(cartaSiguiente()!)">
+              <span class="carta-valor-top">{{ cartaSiguiente()!.nombre }}</span>
+              <span class="carta-palo-centro">{{ cartaSiguiente()!.emoji }}</span>
+              <span class="carta-valor-bottom">{{ cartaSiguiente()!.nombre }}</span>
+            </div>
+            <span class="font-mono text-xs tracking-widest mt-2 block text-center" style="color: #565f89">SIGUIENTE</span>
+          </div>
+        } @else {
+          <div class="carta-wrapper">
+            <div class="carta carta-reverso">
+              <span class="carta-palo-centro" style="color: #565f89">?</span>
+            </div>
+            <span class="font-mono text-xs tracking-widest mt-2 block text-center" style="color: #565f89">SIGUIENTE</span>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="flex gap-4 justify-center">
+      <button class="btn-green px-10 py-4 text-base"
+              [disabled]="estado() !== 'jugando' || revelando()"
+              (click)="elegir('mayor')"
+              id="btn-mayor">
+        ▲ MAYOR
+      </button>
+      <button class="btn-pink px-10 py-4 text-base"
+              [disabled]="estado() !== 'jugando' || revelando()"
+              (click)="elegir('menor')"
+              id="btn-menor">
+        ▼ MENOR
+      </button>
+    </div>
+
+  </div>
+</section>
+
+@if (mostrarModal()) {
+  <div class="fixed inset-0 z-50 flex items-center justify-center"
+       style="background: rgba(0,0,0,0.7); backdrop-filter: blur(4px)"
+       (click)="cerrarModal()">
+    <div class="glass-card p-8 max-w-sm w-full mx-4 text-center"
+         style="border-color: rgba(247,118,142,0.4)"
+         (click)="$event.stopPropagation()">
+
+      <div class="text-5xl mb-4">💀</div>
+      <h3 class="font-mono text-xl font-bold tracking-widest mb-3" style="color: #f7768e">FIN DEL JUEGO</h3>
+
+      <div class="glass-card p-4 mb-6" style="border-color: rgba(86,95,137,0.3)">
+        <p class="font-mono text-xs tracking-widest uppercase mb-1" style="color: #565f89">Cartas acertadas</p>
+        <p class="font-mono text-3xl font-bold" style="color: #9ece6a">{{ aciertos() }}</p>
+      </div>
+
+      <button class="btn-neon w-full py-3" (click)="cerrarModalYReiniciar()" id="btn-reiniciar-mayor-menor">
+        JUGAR DE NUEVO
+      </button>
+    </div>
+  </div>
+}

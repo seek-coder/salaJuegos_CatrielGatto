@@ -1,0 +1,133 @@
+<section class="min-h-screen px-6 py-16">
+  <div class="max-w-3xl mx-auto">
+
+    <div class="text-center mb-10">
+      <div class="text-5xl mb-4">🪓</div>
+      <p class="font-mono text-xs tracking-[0.4em] uppercase mb-2" style="color: #9ece6a">// Juego</p>
+      <h1 class="font-mono text-3xl font-black tracking-widest" style="color: #a9b1d6">AHORCADO</h1>
+    </div>
+
+    <div class="flex flex-wrap justify-center gap-4 mb-8">
+      <div class="glass-card px-4 py-2 text-center">
+        <span class="font-mono text-xs tracking-widest uppercase" style="color: #565f89">Errores</span>
+        <div class="font-mono text-xl font-bold" style="color: #f7768e">{{ errores() }} / {{ maxErrores }}</div>
+      </div>
+      <div class="glass-card px-4 py-2 text-center">
+        <span class="font-mono text-xs tracking-widest uppercase" style="color: #565f89">Tiempo</span>
+        <div class="font-mono text-xl font-bold" style="color: #7aa2f7">{{ tiempoFormateado }}</div>
+      </div>
+      <div class="glass-card px-4 py-2 text-center">
+        <span class="font-mono text-xs tracking-widest uppercase" style="color: #565f89">Letras</span>
+        <div class="font-mono text-xl font-bold" style="color: #e0af68">{{ letrasUsadas().length }}</div>
+      </div>
+    </div>
+
+    <div class="glass-card p-8 mb-8" style="border-color: rgba(122,162,247,0.3)">
+
+      <div class="ahorcado-dibujo mb-8">
+        <svg viewBox="0 0 200 200" class="mx-auto" style="max-width: 180px; max-height: 180px;">
+          <line x1="20" y1="180" x2="80" y2="180" stroke="#565f89" stroke-width="3" stroke-linecap="round"/>
+          <line x1="50" y1="180" x2="50" y2="30" stroke="#565f89" stroke-width="3" stroke-linecap="round"/>
+          <line x1="50" y1="30" x2="130" y2="30" stroke="#565f89" stroke-width="3" stroke-linecap="round"/>
+          <line x1="130" y1="30" x2="130" y2="50" stroke="#565f89" stroke-width="3" stroke-linecap="round"/>
+
+          @if (errores() >= 1) {
+            <circle cx="130" cy="65" r="15" fill="none" stroke="#f7768e" stroke-width="2.5"/>
+          }
+          @if (errores() >= 2) {
+            <line x1="130" y1="80" x2="130" y2="130" stroke="#f7768e" stroke-width="2.5" stroke-linecap="round"/>
+          }
+          @if (errores() >= 3) {
+            <line x1="130" y1="95" x2="105" y2="115" stroke="#f7768e" stroke-width="2.5" stroke-linecap="round"/>
+          }
+          @if (errores() >= 4) {
+            <line x1="130" y1="95" x2="155" y2="115" stroke="#f7768e" stroke-width="2.5" stroke-linecap="round"/>
+          }
+          @if (errores() >= 5) {
+            <line x1="130" y1="130" x2="110" y2="160" stroke="#f7768e" stroke-width="2.5" stroke-linecap="round"/>
+          }
+          @if (errores() >= 6) {
+            <line x1="130" y1="130" x2="150" y2="160" stroke="#f7768e" stroke-width="2.5" stroke-linecap="round"/>
+          }
+        </svg>
+      </div>
+
+      <div class="flex justify-center gap-3 mb-8 flex-wrap">
+        @for (letra of palabraMostrada; track $index) {
+          <span class="font-mono text-3xl md:text-4xl font-bold tracking-widest letra-slot"
+                [style.color]="letra === '_' ? '#565f89' : '#a9b1d6'"
+                [style.border-bottom]="'2px solid ' + (letra === '_' ? '#565f89' : '#7aa2f7')">
+            {{ letra }}
+          </span>
+        }
+      </div>
+
+      <div class="barra-progreso mb-6">
+        <div class="barra-progreso-inner"
+             [style.width.%]="(errores() / maxErrores) * 100"
+             [style.background]="errores() <= 2 ? '#9ece6a' : errores() <= 4 ? '#e0af68' : '#f7768e'">
+        </div>
+      </div>
+    </div>
+
+    <div class="glass-card p-6" style="border-color: rgba(158,206,106,0.2)">
+      <p class="font-mono text-xs tracking-widest uppercase text-center mb-4" style="color: #565f89">
+        Seleccioná una letra
+      </p>
+      <div class="teclado-grid">
+        @for (letra of abecedario; track letra) {
+          <button
+            class="tecla-btn"
+            [class.tecla-correcta]="letraCorrecta(letra)"
+            [class.tecla-incorrecta]="letraIncorrecta(letra)"
+            [disabled]="letraUsada(letra) || estado() !== 'jugando'"
+            (click)="seleccionarLetra(letra)"
+            [id]="'tecla-' + letra">
+            {{ letra }}
+          </button>
+        }
+      </div>
+    </div>
+
+  </div>
+</section>
+
+@if (mostrarModal()) {
+  <div class="fixed inset-0 z-50 flex items-center justify-center"
+       style="background: rgba(0,0,0,0.7); backdrop-filter: blur(4px)"
+       (click)="cerrarModal()">
+    <div class="glass-card p-8 max-w-sm w-full mx-4 text-center"
+         [style.border-color]="estado() === 'gano' ? 'rgba(158,206,106,0.4)' : 'rgba(247,118,142,0.4)'"
+         (click)="$event.stopPropagation()">
+
+      @if (estado() === 'gano') {
+        <div class="text-5xl mb-4">🎉</div>
+        <h3 class="font-mono text-xl font-bold tracking-widest mb-3" style="color: #9ece6a">¡GANASTE!</h3>
+        <p class="font-mono text-sm mb-2" style="color: #a9b1d6">
+          La palabra era: <strong style="color: #7aa2f7">{{ palabraSecreta() }}</strong>
+        </p>
+      } @else {
+        <div class="text-5xl mb-4">💀</div>
+        <h3 class="font-mono text-xl font-bold tracking-widest mb-3" style="color: #f7768e">¡PERDISTE!</h3>
+        <p class="font-mono text-sm mb-2" style="color: #a9b1d6">
+          La palabra era: <strong style="color: #f7768e">{{ palabraSecreta() }}</strong>
+        </p>
+      }
+
+      <div class="flex gap-4 justify-center mt-2 mb-6">
+        <div class="text-center">
+          <span class="font-mono text-xs" style="color: #565f89">Tiempo</span>
+          <div class="font-mono text-lg font-bold" style="color: #7aa2f7">{{ tiempoFormateado }}</div>
+        </div>
+        <div class="text-center">
+          <span class="font-mono text-xs" style="color: #565f89">Letras</span>
+          <div class="font-mono text-lg font-bold" style="color: #e0af68">{{ letrasUsadas().length }}</div>
+        </div>
+      </div>
+
+      <button class="btn-neon w-full py-3" (click)="cerrarModalYReiniciar()" id="btn-reiniciar-ahorcado">
+        JUGAR DE NUEVO
+      </button>
+    </div>
+  </div>
+}

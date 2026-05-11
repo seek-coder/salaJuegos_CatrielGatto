@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../servicios/auth.service';
 
-// defino la interfaz para la config de los juegos de la grilla
 interface Juego {
   nombre: string;
   descripcion: string;
@@ -12,7 +11,6 @@ interface Juego {
   color: string;
 }
 
-// inyecto RouterLink para el enrutamiento desde el html
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -20,11 +18,8 @@ interface Juego {
   templateUrl: './home.html',
   styleUrl: './home.scss'
 })
-
-// datos de los juegos para armar las cards
 export class HomeComponent {
 
-  // Inyectamos AuthService para acceder al estado del usuario desde el template.
   constructor(public authService: AuthService) {}
 
   juegos: Juego[] = [
@@ -33,7 +28,7 @@ export class HomeComponent {
       descripcion: 'Adiviná la palabra letra por letra antes de que se complete el dibujo.',
       icono: '🪓',
       ruta: '/juegos/ahorcado',
-      disponible: false, // deshabilitado hasta que se implementen en proximos sprints
+      disponible: true,
       color: 'cyan'
     },
     {
@@ -41,7 +36,7 @@ export class HomeComponent {
       descripcion: 'Adiviná si la siguiente carta es mayor o menor que la anterior.',
       icono: '🃏',
       ruta: '/juegos/mayor-menor',
-      disponible: false,
+      disponible: true,
       color: 'purple'
     },
     {
@@ -62,7 +57,6 @@ export class HomeComponent {
     }
   ];
 
-  // logout
   cerrarSesion() {
     this.authService.cerrarSesion();
   }
