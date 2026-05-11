@@ -1,0 +1,192 @@
+<section class="min-h-screen px-6 py-16">
+  <div class="max-w-4xl mx-auto">
+
+    <div class="text-center mb-10">
+      <div class="text-5xl mb-4">🏆</div>
+      <p class="font-mono text-xs tracking-[0.4em] uppercase mb-2" style="color: #9ece6a">// Estadísticas</p>
+      <h1 class="font-mono text-3xl font-black tracking-widest" style="color: #a9b1d6">RESULTADOS</h1>
+    </div>
+
+    <div class="flex flex-wrap justify-center gap-2 mb-8">
+      <button class="tab-btn"
+              [class.tab-activa]="tabActiva() === 'ahorcado'"
+              (click)="cambiarTab('ahorcado')"
+              id="tab-ahorcado">
+        🪓 Ahorcado
+      </button>
+      <button class="tab-btn"
+              [class.tab-activa]="tabActiva() === 'mayor-menor'"
+              (click)="cambiarTab('mayor-menor')"
+              id="tab-mayor-menor">
+        🃏 Mayor o Menor
+      </button>
+      @if (authService.usuarioActual()) {
+        <button class="tab-btn"
+                [class.tab-activa]="tabActiva() === 'mis-partidas'"
+                (click)="cambiarTab('mis-partidas')"
+                id="tab-mis-partidas">
+          👤 Mis Partidas
+        </button>
+      }
+    </div>
+
+    @if (cargando()) {
+      <div class="text-center py-16">
+        <div class="text-4xl mb-4 animate-pulse">⏳</div>
+        <p class="font-mono text-sm" style="color: #565f89">Cargando resultados...</p>
+      </div>
+    } @else {
+
+      @if (tabActiva() === 'ahorcado') {
+        <div class="glass-card p-6" style="border-color: rgba(122,162,247,0.3)">
+          <h2 class="font-mono text-lg font-bold tracking-widest uppercase mb-6 text-center" style="color: #a9b1d6">
+            <span style="color: #7aa2f7">// </span>Ranking Ahorcado
+          </h2>
+
+          @if (rankingAhorcado().length === 0) {
+            <div class="text-center py-8">
+              <p class="font-mono text-sm" style="color: #565f89">No hay partidas registradas todavía.</p>
+              <a routerLink="/juegos/ahorcado" class="btn-neon inline-block mt-4 text-sm">Jugar Ahorcado →</a>
+            </div>
+          } @else {
+            <div class="tabla-contenedor">
+              <table class="tabla-ranking">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Jugador</th>
+                    <th>Resultado</th>
+                    <th>Palabra</th>
+                    <th>Tiempo</th>
+                    <th>Letras</th>
+                    <th>Fecha</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (partida of rankingAhorcado(); track partida.id) {
+                    <tr [class.fila-victoria]="resultadoAhorcado(partida) === 'Victoria'"
+                        [class.fila-derrota]="resultadoAhorcado(partida) === 'Derrota'">
+                      <td class="text-center">{{ medallaIcono($index) }}</td>
+                      <td>{{ extraerNombre(partida.usuario) }}</td>
+                      <td>
+                        <span class="badge"
+                              [style.color]="resultadoAhorcado(partida) === 'Victoria' ? '#9ece6a' : '#f7768e'"
+                              [style.border-color]="resultadoAhorcado(partida) === 'Victoria' ? 'rgba(158,206,106,0.3)' : 'rgba(247,118,142,0.3)'">
+                          {{ resultadoAhorcado(partida) }}
+                        </span>
+                      </td>
+                      <td style="color: #7aa2f7">{{ palabraAhorcado(partida) }}</td>
+                      <td>{{ tiempoAhorcado(partida) }}</td>
+                      <td class="text-center">{{ letrasAhorcado(partida) }}</td>
+                      <td style="color: #565f89">{{ formatearFecha(partida.fecha) }}</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          }
+        </div>
+      }
+
+      @if (tabActiva() === 'mayor-menor') {
+        <div class="glass-card p-6" style="border-color: rgba(247,118,142,0.3)">
+          <h2 class="font-mono text-lg font-bold tracking-widest uppercase mb-6 text-center" style="color: #a9b1d6">
+            <span style="color: #f7768e">// </span>Ranking Mayor o Menor
+          </h2>
+
+          @if (rankingMayorMenor().length === 0) {
+            <div class="text-center py-8">
+              <p class="font-mono text-sm" style="color: #565f89">No hay partidas registradas todavía.</p>
+              <a routerLink="/juegos/mayor-menor" class="btn-neon inline-block mt-4 text-sm">Jugar Mayor o Menor →</a>
+            </div>
+          } @else {
+            <div class="tabla-contenedor">
+              <table class="tabla-ranking">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Jugador</th>
+                    <th>Aciertos</th>
+                    <th>Fecha</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (partida of rankingMayorMenor(); track partida.id) {
+                    <tr>
+                      <td class="text-center">{{ medallaIcono($index) }}</td>
+                      <td>{{ extraerNombre(partida.usuario) }}</td>
+                      <td>
+                        <span class="font-bold" style="color: #9ece6a">{{ partida.puntaje }}</span>
+                        <span style="color: #565f89"> cartas</span>
+                      </td>
+                      <td style="color: #565f89">{{ formatearFecha(partida.fecha) }}</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          }
+        </div>
+      }
+
+      @if (tabActiva() === 'mis-partidas') {
+        <div class="glass-card p-6" style="border-color: rgba(158,206,106,0.3)">
+          <h2 class="font-mono text-lg font-bold tracking-widest uppercase mb-6 text-center" style="color: #a9b1d6">
+            <span style="color: #9ece6a">// </span>Mis Partidas
+          </h2>
+
+          @if (misPartidas().length === 0) {
+            <div class="text-center py-8">
+              <p class="font-mono text-sm" style="color: #565f89">Todavía no jugaste ninguna partida.</p>
+            </div>
+          } @else {
+            <div class="tabla-contenedor">
+              <table class="tabla-ranking">
+                <thead>
+                  <tr>
+                    <th>Juego</th>
+                    <th>Puntaje</th>
+                    <th>Detalle</th>
+                    <th>Fecha</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (partida of misPartidas(); track partida.id) {
+                    <tr>
+                      <td>
+                        @if (partida.juego === 'Ahorcado') {
+                          <span>🪓 {{ partida.juego }}</span>
+                        } @else {
+                          <span>🃏 {{ partida.juego }}</span>
+                        }
+                      </td>
+                      <td>
+                        <span class="font-bold" style="color: #e0af68">{{ partida.puntaje }}</span>
+                      </td>
+                      <td style="color: #565f89; font-size: 0.75rem">
+                        @if (partida.juego === 'Ahorcado') {
+                          {{ palabraAhorcado(partida) }} · {{ tiempoAhorcado(partida) }} · {{ letrasAhorcado(partida) }} letras
+                        } @else {
+                          {{ partida.puntaje }} cartas acertadas
+                        }
+                      </td>
+                      <td style="color: #565f89">{{ formatearFecha(partida.fecha) }}</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          }
+        </div>
+      }
+
+    }
+
+    <div class="flex justify-center mt-8">
+      <button class="btn-neon text-sm" (click)="cargarDatos()" id="btn-refrescar-resultados">
+        ↻ REFRESCAR
+      </button>
+    </div>
+
+  </div>
+</section>

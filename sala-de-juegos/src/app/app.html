@@ -62,61 +62,76 @@
 
 <nav class="fixed top-0 left-0 right-0 z-50"
      style="background: rgba(26,27,38,0.95); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(122,162,247,0.15);">
-  <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-around">
+  <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
 
     <a routerLink="/home"
-       class="font-mono text-md font-bold tracking-widest mr-8 mb-1 transition-all duration-300 hover:scale-105"
-       style="color: #7aa2f7; text-shadow: 0 0 15px rgba(122,162,247,0.5) ">
-      🕹️ El Cyber de Cato
+       class="font-mono text-sm font-bold tracking-widest transition-all duration-300 hover:scale-105"
+       style="color: #7aa2f7; text-shadow: 0 0 15px rgba(122,162,247,0.5)">
+      🕹️ Cyber de Cato
     </a>
 
-    <div class="hidden md:flex items-center gap-8">
-      <a routerLink="/home" routerLinkActive="active-link"
-         class="nav-link font-mono text-sm tracking-widest transition-colors duration-300 uppercase hover:scale-105"
-         style="color: #565f89" onmouseenter="this.style.color='#7aa2f7'" onmouseleave="if(!this.classList.contains('active-link'))this.style.color='#565f89'">
+    <div class="hidden lg:flex items-center gap-5">
+      <a routerLink="/home" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}"
+         class="nav-link font-mono text-xs tracking-wider transition-colors duration-300 uppercase"
+         style="color: #565f89">
         Home
       </a>
-      <a routerLink="/juegos/ahorcado" routerLinkActive="active-link"
-         class="nav-link font-mono text-sm tracking-widest transition-colors duration-300 uppercase hover:scale-105"
-         style="color: #565f89" onmouseenter="this.style.color='#7aa2f7'" onmouseleave="if(!this.classList.contains('active-link'))this.style.color='#565f89'">
-        Ahorcado
-      </a>
-      <a routerLink="/juegos/mayor-menor" routerLinkActive="active-link"
-         class="nav-link font-mono text-sm tracking-widest transition-colors duration-300 uppercase hover:scale-105"
-         style="color: #565f89" onmouseenter="this.style.color='#7aa2f7'" onmouseleave="if(!this.classList.contains('active-link'))this.style.color='#565f89'">
-        Mayor o Menor
-      </a>
+
+      <div class="nav-dropdown">
+        <span class="nav-link font-mono text-xs flex tracking-wider uppercase cursor-default"
+              style="color: #565f89">
+          Juegos ▾
+        </span>
+        <div class="nav-dropdown-menu">
+          <a routerLink="/juegos/ahorcado" routerLinkActive="active-link"
+             class="nav-dropdown-item">
+            🪓 Ahorcado
+          </a>
+          <a routerLink="/juegos/mayor-menor" routerLinkActive="active-link"
+             class="nav-dropdown-item">
+            🃏 Mayor o Menor
+          </a>
+        </div>
+      </div>
+
       <a routerLink="/chat" routerLinkActive="active-link"
-         class="nav-link font-mono text-sm tracking-widest transition-colors duration-300 uppercase hover:scale-105"
-         style="color: #565f89" onmouseenter="this.style.color='#7aa2f7'" onmouseleave="if(!this.classList.contains('active-link'))this.style.color='#565f89'">
+         class="nav-link font-mono text-xs tracking-wider transition-colors duration-300 uppercase"
+         style="color: #565f89">
         Chat
       </a>
+      <a routerLink="/resultados" routerLinkActive="active-link"
+         class="nav-link font-mono text-xs tracking-wider transition-colors duration-300 uppercase"
+         style="color: #565f89">
+        Resultados
+      </a>
       <a routerLink="/quien-soy" routerLinkActive="active-link"
-         class="nav-link font-mono text-sm tracking-widest transition-colors duration-300 uppercase hover:scale-105"
-         style="color: #565f89" onmouseenter="this.style.color='#7aa2f7'" onmouseleave="if(!this.classList.contains('active-link'))this.style.color='#565f89'">
+         class="nav-link font-mono text-xs tracking-wider transition-colors duration-300 uppercase"
+         style="color: #565f89">
         Quién Soy
       </a>
 
+      <div class="h-4 w-px mx-1" style="background: rgba(86,95,137,0.3)"></div>
+
       @if (!authService.usuarioActual()) {
         <a routerLink="/registro"
-           class="btn-neon text-sm">
-          Registrarse
+           class="btn-neon text-xs px-4 py-2">
+          Registro
         </a>
         <a routerLink="/login"
-           class="btn-green text-sm">
+           class="btn-green text-xs px-4 py-2">
           Ingresar
         </a>
       } @else {
-        <span class="font-mono text-sm tracking-widest" style="color: #9ece6a">
+        <span class="font-mono text-xs tracking-wider" style="color: #9ece6a">
           {{ authService.usuarioActual()!.nombre }}
         </span>
-        <button class="btn-pink text-sm" (click)="cerrarSesion()" id="nav-btn-logout">
+        <button class="btn-pink text-xs px-4 py-2" (click)="cerrarSesion()" id="nav-btn-logout">
           Salir
         </button>
       }
     </div>
 
-    <button class="md:hidden focus:outline-none"
+    <button class="lg:hidden focus:outline-none"
             style="color: #7aa2f7"
             (click)="menuOpen = !menuOpen"
             id="hamburger-btn"
@@ -134,32 +149,42 @@
   </div>
 
   @if (menuOpen) {
-    <div class="md:hidden px-6 py-4 flex flex-col gap-4"
+    <div class="lg:hidden px-6 py-4 flex flex-col gap-3"
          style="background: rgba(26,27,38,0.98); border-top: 1px solid rgba(122,162,247,0.1)">
       <a routerLink="/home" routerLinkActive="active-link"
          (click)="menuOpen = false"
-         class="font-mono text-sm tracking-widest transition-colors uppercase" style="color: #565f89">Home</a>
+         class="font-mono text-sm tracking-wider transition-colors uppercase" style="color: #565f89">Home</a>
+
+      <p class="font-mono text-xs tracking-widest uppercase mt-1" style="color: #565f89; opacity: 0.5">Juegos</p>
       <a routerLink="/juegos/ahorcado" routerLinkActive="active-link"
          (click)="menuOpen = false"
-         class="font-mono text-sm tracking-widest transition-colors uppercase" style="color: #565f89">Ahorcado</a>
+         class="font-mono text-sm tracking-wider transition-colors pl-3" style="color: #565f89">🪓 Ahorcado</a>
       <a routerLink="/juegos/mayor-menor" routerLinkActive="active-link"
          (click)="menuOpen = false"
-         class="font-mono text-sm tracking-widest transition-colors uppercase" style="color: #565f89">Mayor o Menor</a>
+         class="font-mono text-sm tracking-wider transition-colors pl-3" style="color: #565f89">🃏 Mayor o Menor</a>
+
+      <div class="h-px my-1" style="background: rgba(86,95,137,0.15)"></div>
+
       <a routerLink="/chat" routerLinkActive="active-link"
          (click)="menuOpen = false"
-         class="font-mono text-sm tracking-widest transition-colors uppercase" style="color: #565f89">Chat</a>
+         class="font-mono text-sm tracking-wider transition-colors uppercase" style="color: #565f89">Chat</a>
+      <a routerLink="/resultados" routerLinkActive="active-link"
+         (click)="menuOpen = false"
+         class="font-mono text-sm tracking-wider transition-colors uppercase" style="color: #565f89">Resultados</a>
       <a routerLink="/quien-soy" routerLinkActive="active-link"
          (click)="menuOpen = false"
-         class="font-mono text-sm tracking-widest transition-colors uppercase" style="color: #565f89">Quién Soy</a>
+         class="font-mono text-sm tracking-wider transition-colors uppercase" style="color: #565f89">Quién Soy</a>
+
+      <div class="h-px my-1" style="background: rgba(86,95,137,0.15)"></div>
 
       @if (!authService.usuarioActual()) {
-        <a routerLink="/registro" (click)="menuOpen = false" class="btn-neon text-center text-sm">Registrarse</a>
-        <a routerLink="/login" (click)="menuOpen = false" class="btn-green text-center text-sm">Ingresar</a>
+        <a routerLink="/registro" (click)="menuOpen = false" class="btn-neon text-center text-xs">Registro</a>
+        <a routerLink="/login" (click)="menuOpen = false" class="btn-green text-center text-xs">Ingresar</a>
       } @else {
-        <span class="font-mono text-sm tracking-widest" style="color: #9ece6a">
+        <span class="font-mono text-sm tracking-wider" style="color: #9ece6a">
           {{ authService.usuarioActual()!.nombre }}
         </span>
-        <button class="btn-pink text-center text-sm" (click)="cerrarSesion()">Cerrar Sesión</button>
+        <button class="btn-pink text-center text-xs" (click)="cerrarSesion()">Cerrar Sesión</button>
       }
     </div>
   }

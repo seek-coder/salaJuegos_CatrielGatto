@@ -6,6 +6,7 @@ import { QuienSoyComponent } from './componentes/quien-soy/quien-soy';
 import { AhorcadoComponent } from './componentes/ahorcado/ahorcado';
 import { MayorMenorComponent } from './componentes/mayor-menor/mayor-menor';
 import { ChatComponent } from './componentes/chat/chat';
+import { ResultadosComponent } from './componentes/resultados/resultados';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -16,5 +17,6 @@ export const routes: Routes = [
   { path: 'juegos/ahorcado', component: AhorcadoComponent },
   { path: 'juegos/mayor-menor', component: MayorMenorComponent },
   { path: 'chat', component: ChatComponent },
+  { path: 'resultados', component: ResultadosComponent },
   { path: '**', redirectTo: 'home' },
 ];
