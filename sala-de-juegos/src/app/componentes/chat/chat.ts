@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, signal, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, signal, computed, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -13,8 +13,11 @@ import { ChatService, Mensaje } from '../../servicios/chat.service';
   styleUrl: './chat.scss'
 })
 export class ChatComponent implements OnInit, OnDestroy {
+  readonly MAX_CARACTERES = 200;
+
   textoMensaje = signal('');
   enviando = signal(false);
+  caracteresRestantes = computed(() => this.MAX_CARACTERES - this.textoMensaje().length);
 
   @ViewChild('contenedorMensajes') contenedorMensajes!: ElementRef;
 
@@ -63,6 +66,14 @@ export class ChatComponent implements OnInit, OnDestroy {
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault();
       this.enviar();
+    }
+  }
+
+  actualizarTexto(valor: string) {
+    if (valor.length <= this.MAX_CARACTERES) {
+      this.textoMensaje.set(valor);
+    } else {
+      this.textoMensaje.set(valor.substring(0, this.MAX_CARACTERES));
     }
   }
 

@@ -44,7 +44,7 @@ export class HomeComponent {
       descripcion: 'Respondé preguntas de trivia contra el reloj.',
       icono: '🧠',
       ruta: '/juegos/preguntados',
-      disponible: false,
+      disponible: true,
       color: 'amber'
     },
     {
@@ -52,7 +52,7 @@ export class HomeComponent {
       descripcion: 'Controlá un caballo de ajedrez y recolectá paquetes de datos sin quedarte sin casillas.',
       icono: '♞',
       ruta: '/juegos/path-of-the-knight',
-      disponible: false,
+      disponible: true,
       color: 'green'
     }
   ];

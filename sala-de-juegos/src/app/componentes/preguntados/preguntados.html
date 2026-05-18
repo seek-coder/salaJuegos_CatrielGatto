@@ -1,0 +1,129 @@
+<section class="min-h-screen px-6 py-16">
+  <div class="max-w-3xl mx-auto">
+
+    <div class="text-center mb-10">
+      <div class="text-5xl mb-4">🧠</div>
+      <p class="font-mono text-xs tracking-[0.4em] uppercase mb-2" style="color: #9ece6a">// Juego</p>
+      <h1 class="font-mono text-3xl font-black tracking-widest" style="color: #a9b1d6">PREGUNTADOS</h1>
+      <p class="font-mono text-xs mt-2" style="color: #565f89">Trivia de Videojuegos, ¡EN INGLÉS!</p>
+    </div>
+
+    @if (estado() === 'cargando' && !errorCarga()) {
+      <div class="flex flex-col items-center justify-center gap-6 py-24">
+        <div class="w-16 h-16 rounded-full animate-spin" style="border: 4px solid rgba(122,162,247,0.2); border-top-color: #7aa2f7"></div>
+        <p class="font-mono text-sm tracking-widest" style="color: #565f89">Cargando preguntas...</p>
+      </div>
+    }
+
+    @if (errorCarga()) {
+      <div class="glass-card p-8 text-center" style="border-color: rgba(247,118,142,0.3)">
+        <div class="text-4xl mb-4">⚠️</div>
+        <p class="font-mono text-sm" style="color: #f7768e">Error al cargar las preguntas</p>
+        <p class="font-mono text-xs mt-2 mb-6" style="color: #565f89">Verificá tu conexión a internet</p>
+        <button class="btn-neon text-sm" (click)="iniciarJuego()" id="btn-reintentar-preguntados">
+          REINTENTAR
+        </button>
+      </div>
+    }
+
+    @if (estado() !== 'cargando' && !errorCarga()) {
+      <div class="flex flex-wrap justify-center gap-4 mb-8">
+        <div class="glass-card px-4 py-2 text-center">
+          <span class="font-mono text-xs tracking-widest uppercase" style="color: #565f89">Pregunta</span>
+          <div class="font-mono text-xl font-bold" style="color: #7aa2f7">{{ indicePregunta() + 1 }} / {{ totalPreguntas }}</div>
+        </div>
+        <div class="glass-card px-4 py-2 text-center">
+          <span class="font-mono text-xs tracking-widest uppercase" style="color: #565f89">Aciertos</span>
+          <div class="font-mono text-xl font-bold" style="color: #9ece6a">{{ aciertos() }}</div>
+        </div>
+        <div class="glass-card px-4 py-2 text-center">
+          <span class="font-mono text-xs tracking-widest uppercase" style="color: #565f89">Tiempo</span>
+          <div class="font-mono text-xl font-bold" style="color: #e0af68">{{ tiempoFormateado }}</div>
+        </div>
+      </div>
+
+      <div class="barra-progreso mb-8">
+        <div class="barra-progreso-inner"
+             [style.width.%]="progresoPorcentaje"
+             style="background: #7aa2f7">
+        </div>
+      </div>
+
+      @if (preguntaActual; as p) {
+        <div class="glass-card p-8 mb-6" style="border-color: rgba(122,162,247,0.3)">
+
+          <div class="flex items-center gap-2 mb-5">
+            <span class="font-mono text-xs px-2 py-1 rounded"
+                  [style.color]="dificultadColor(p.dificultad)"
+                  [style.border-color]="dificultadColor(p.dificultad)"
+                  style="border: 1px solid; background: rgba(26,27,38,0.6)">
+              {{ dificultadTexto(p.dificultad) }}
+            </span>
+            <span class="font-mono text-xs" style="color: #565f89">🎮 Video Games</span>
+          </div>
+
+          <h2 class="font-mono text-lg md:text-xl font-bold leading-relaxed mb-8" style="color: #a9b1d6">
+            {{ p.texto }}
+          </h2>
+
+          <div class="flex flex-col gap-3">
+            @for (opcion of opciones; track opcion) {
+              <button
+                class="opcion-btn"
+                [class.opcion-correcta]="esCorrecta(opcion)"
+                [class.opcion-incorrecta]="esIncorrecta(opcion)"
+                [disabled]="respuestaElegida() !== null"
+                (click)="elegirRespuesta(opcion)"
+                [id]="'opcion-' + $index">
+                <span class="opcion-letra">{{ ['A', 'B', 'C', 'D'][$index] }}</span>
+                <span>{{ opcion }}</span>
+              </button>
+            }
+          </div>
+        </div>
+      }
+    }
+
+  </div>
+</section>
+
+@if (mostrarModal()) {
+  <div class="fixed inset-0 z-50 flex items-center justify-center"
+       style="background: rgba(0,0,0,0.7); backdrop-filter: blur(4px)"
+       (click)="cerrarModal()">
+    <div class="glass-card p-8 max-w-sm w-full mx-4 text-center"
+         [style.border-color]="aciertos() >= 7 ? 'rgba(158,206,106,0.4)' : aciertos() >= 4 ? 'rgba(224,175,104,0.4)' : 'rgba(247,118,142,0.4)'"
+         (click)="$event.stopPropagation()">
+
+      @if (aciertos() >= 7) {
+        <div class="text-5xl mb-4">🏆</div>
+        <h3 class="font-mono text-xl font-bold tracking-widest mb-3" style="color: #9ece6a">¡EXCELENTE!</h3>
+      } @else if (aciertos() >= 4) {
+        <div class="text-5xl mb-4">👍</div>
+        <h3 class="font-mono text-xl font-bold tracking-widest mb-3" style="color: #e0af68">¡BIEN!</h3>
+      } @else {
+        <div class="text-5xl mb-4">💀</div>
+        <h3 class="font-mono text-xl font-bold tracking-widest mb-3" style="color: #f7768e">GAME OVER</h3>
+      }
+
+      <p class="font-mono text-sm mb-2" style="color: #a9b1d6">
+        Acertaste <strong [style.color]="aciertos() >= 7 ? '#9ece6a' : '#e0af68'">{{ aciertos() }}</strong> de {{ totalPreguntas }} preguntas
+      </p>
+
+      <div class="flex gap-4 justify-center mt-2 mb-6">
+        <div class="text-center">
+          <span class="font-mono text-xs" style="color: #565f89">Tiempo</span>
+          <div class="font-mono text-lg font-bold" style="color: #7aa2f7">{{ tiempoFormateado }}</div>
+        </div>
+        <div class="text-center">
+          <span class="font-mono text-xs" style="color: #565f89">Porcentaje</span>
+          <div class="font-mono text-lg font-bold" style="color: #e0af68">{{ (aciertos() / totalPreguntas * 100) | number:'1.0-0' }}%</div>
+        </div>
+      </div>
+
+      <button class="btn-neon w-full py-3" (click)="cerrarModalYReiniciar()" id="btn-reiniciar-preguntados">
+        JUGAR DE NUEVO
+      </button>
+    </div>
+  </div>
+}

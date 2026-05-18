@@ -39,9 +39,10 @@
             class="input-neon flex-1"
             placeholder="Escribí tu mensaje..."
             [value]="textoMensaje()"
-            (input)="textoMensaje.set($any($event.target).value)"
+            (input)="actualizarTexto($any($event.target).value)"
             (keydown)="onKeydown($event)"
             [disabled]="enviando()"
+            maxlength="200"
             id="chat-input"
             autocomplete="off">
           <button class="btn-neon px-6 py-3"
@@ -50,6 +51,12 @@
                   id="btn-enviar-chat">
             @if (enviando()) { ... } @else { ENVIAR }
           </button>
+        </div>
+        <div class="flex justify-end mt-2">
+          <span class="font-mono text-xs tracking-wider"
+                [style.color]="caracteresRestantes() <= 20 ? '#f7768e' : '#565f89'">
+            {{ caracteresRestantes() }} / {{ MAX_CARACTERES }}
+          </span>
         </div>
       </div>
 

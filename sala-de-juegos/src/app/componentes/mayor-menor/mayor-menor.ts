@@ -11,6 +11,7 @@ interface Carta {
   emoji: string;
 }
 
+// podría pasar esto a JSON también
 const PALOS: { nombre: string; emoji: string }[] = [
   { nombre: 'Espadas', emoji: '♠' },
   { nombre: 'Corazones', emoji: '♥' },

@@ -20,6 +20,18 @@
               id="tab-mayor-menor">
         🃏 Mayor o Menor
       </button>
+      <button class="tab-btn"
+              [class.tab-activa]="tabActiva() === 'preguntados'"
+              (click)="cambiarTab('preguntados')"
+              id="tab-preguntados">
+        🧠 Preguntados
+      </button>
+      <button class="tab-btn"
+              [class.tab-activa]="tabActiva() === 'path-knight'"
+              (click)="cambiarTab('path-knight')"
+              id="tab-path-knight">
+        ♞ Knight
+      </button>
       @if (authService.usuarioActual()) {
         <button class="tab-btn"
                 [class.tab-activa]="tabActiva() === 'mis-partidas'"
@@ -129,6 +141,107 @@
         </div>
       }
 
+      @if (tabActiva() === 'preguntados') {
+        <div class="glass-card p-6" style="border-color: rgba(224,175,104,0.3)">
+          <h2 class="font-mono text-lg font-bold tracking-widest uppercase mb-6 text-center" style="color: #a9b1d6">
+            <span style="color: #e0af68">// </span>Ranking Preguntados
+          </h2>
+
+          @if (rankingPreguntados().length === 0) {
+            <div class="text-center py-8">
+              <p class="font-mono text-sm" style="color: #565f89">No hay partidas registradas todavía.</p>
+              <a routerLink="/juegos/preguntados" class="btn-neon inline-block mt-4 text-sm">Jugar Preguntados →</a>
+            </div>
+          } @else {
+            <div class="tabla-contenedor">
+              <table class="tabla-ranking">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Jugador</th>
+                    <th>Aciertos</th>
+                    <th>Porcentaje</th>
+                    <th>Tiempo</th>
+                    <th>Fecha</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (partida of rankingPreguntados(); track partida.id) {
+                    <tr>
+                      <td class="text-center">{{ medallaIcono($index) }}</td>
+                      <td>{{ extraerNombre(partida.usuario) }}</td>
+                      <td>
+                        <span class="font-bold" style="color: #9ece6a">{{ partida.puntaje }}</span>
+                        <span style="color: #565f89"> / 10</span>
+                      </td>
+                      <td>
+                        <span class="font-bold" style="color: #e0af68">{{ porcentajePreguntados(partida) }}%</span>
+                      </td>
+                      <td>{{ tiempoPreguntados(partida) }}</td>
+                      <td style="color: #565f89">{{ formatearFecha(partida.fecha) }}</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          }
+        </div>
+      }
+
+      @if (tabActiva() === 'path-knight') {
+        <div class="glass-card p-6" style="border-color: rgba(158,206,106,0.3)">
+          <h2 class="font-mono text-lg font-bold tracking-widest uppercase mb-6 text-center" style="color: #a9b1d6">
+            <span style="color: #9ece6a">// </span>Ranking Path of the Knight
+          </h2>
+
+          @if (rankingKnight().length === 0) {
+            <div class="text-center py-8">
+              <p class="font-mono text-sm" style="color: #565f89">No hay partidas registradas todavía.</p>
+              <a routerLink="/juegos/path-of-the-knight" class="btn-neon inline-block mt-4 text-sm">Jugar Path of the Knight →</a>
+            </div>
+          } @else {
+            <div class="tabla-contenedor">
+              <table class="tabla-ranking">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Jugador</th>
+                    <th>Resultado</th>
+                    <th>Paquetes</th>
+                    <th>Movimientos</th>
+                    <th>Tiempo</th>
+                    <th>Fecha</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (partida of rankingKnight(); track partida.id) {
+                    <tr [class.fila-victoria]="resultadoKnight(partida) === 'Victoria'"
+                        [class.fila-derrota]="resultadoKnight(partida) === 'Derrota'">
+                      <td class="text-center">{{ medallaIcono($index) }}</td>
+                      <td>{{ extraerNombre(partida.usuario) }}</td>
+                      <td>
+                        <span class="badge"
+                              [style.color]="resultadoKnight(partida) === 'Victoria' ? '#9ece6a' : '#f7768e'"
+                              [style.border-color]="resultadoKnight(partida) === 'Victoria' ? 'rgba(158,206,106,0.3)' : 'rgba(247,118,142,0.3)'">
+                          {{ resultadoKnight(partida) }}
+                        </span>
+                      </td>
+                      <td>
+                        <span class="font-bold" style="color: #e0af68">{{ partida.puntaje }}</span>
+                        <span style="color: #565f89"> / 5</span>
+                      </td>
+                      <td class="text-center">{{ movimientosKnight(partida) }}</td>
+                      <td>{{ tiempoKnight(partida) }}</td>
+                      <td style="color: #565f89">{{ formatearFecha(partida.fecha) }}</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          }
+        </div>
+      }
+
       @if (tabActiva() === 'mis-partidas') {
         <div class="glass-card p-6" style="border-color: rgba(158,206,106,0.3)">
           <h2 class="font-mono text-lg font-bold tracking-widest uppercase mb-6 text-center" style="color: #a9b1d6">
@@ -154,21 +267,13 @@
                   @for (partida of misPartidas(); track partida.id) {
                     <tr>
                       <td>
-                        @if (partida.juego === 'Ahorcado') {
-                          <span>🪓 {{ partida.juego }}</span>
-                        } @else {
-                          <span>🃏 {{ partida.juego }}</span>
-                        }
+                        <span>{{ iconoJuego(partida.juego) }} {{ partida.juego }}</span>
                       </td>
                       <td>
                         <span class="font-bold" style="color: #e0af68">{{ partida.puntaje }}</span>
                       </td>
                       <td style="color: #565f89; font-size: 0.75rem">
-                        @if (partida.juego === 'Ahorcado') {
-                          {{ palabraAhorcado(partida) }} · {{ tiempoAhorcado(partida) }} · {{ letrasAhorcado(partida) }} letras
-                        } @else {
-                          {{ partida.puntaje }} cartas acertadas
-                        }
+                        {{ detallePartida(partida) }}
                       </td>
                       <td style="color: #565f89">{{ formatearFecha(partida.fecha) }}</td>
                     </tr>

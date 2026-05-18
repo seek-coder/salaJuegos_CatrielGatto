@@ -1,8 +1,8 @@
 
-<!-- Decoraciones geométricas laterales -->
+<!-- decoraciones geométricas laterales -->
 <div class="side-decorations" aria-hidden="true">
 
-  <!-- === Lado izquierdo === -->
+  <!-- === lado izquierdo === -->
   <svg class="geo geo--l1" width="120" height="120" viewBox="0 0 120 120">
     <circle cx="60" cy="60" r="54" fill="none" stroke="#7aa2f7" stroke-width="1"/>
   </svg>
@@ -25,12 +25,12 @@
     <circle cx="8" cy="40" r="2.5" fill="#565f89"/><circle cx="24" cy="40" r="2.5" fill="#565f89"/><circle cx="40" cy="40" r="2.5" fill="#7aa2f7"/><circle cx="56" cy="40" r="2.5" fill="#565f89"/>
     <circle cx="8" cy="56" r="2.5" fill="#565f89"/><circle cx="24" cy="56" r="2.5" fill="#565f89"/><circle cx="40" cy="56" r="2.5" fill="#565f89"/><circle cx="56" cy="56" r="2.5" fill="#565f89"/>
   </svg>
-  <!-- Círculo pequeño extra -->
+  <!-- círculo pequeño extra -->
   <svg class="geo geo--l7" width="45" height="45" viewBox="0 0 45 45">
     <circle cx="22.5" cy="22.5" r="18" fill="none" stroke="#9ece6a" stroke-width="1"/>
   </svg>
 
-  <!-- === Lado derecho === -->
+  <!-- === lado derecho === -->
   <svg class="geo geo--r1" width="110" height="110" viewBox="0 0 110 110">
     <circle cx="55" cy="55" r="49" fill="none" stroke="#f7768e" stroke-width="1"/>
   </svg>
@@ -53,7 +53,7 @@
     <circle cx="8" cy="40" r="2.5" fill="#565f89"/><circle cx="24" cy="40" r="2.5" fill="#f7768e"/><circle cx="40" cy="40" r="2.5" fill="#565f89"/><circle cx="56" cy="40" r="2.5" fill="#565f89"/>
     <circle cx="8" cy="56" r="2.5" fill="#565f89"/><circle cx="24" cy="56" r="2.5" fill="#565f89"/><circle cx="40" cy="56" r="2.5" fill="#565f89"/><circle cx="56" cy="56" r="2.5" fill="#565f89"/>
   </svg>
-  <!-- Rombo pequeño extra -->
+  <!-- rombo pequeño extra -->
   <svg class="geo geo--r7" width="50" height="50" viewBox="0 0 50 50">
     <rect x="10" y="10" width="30" height="30" fill="none" stroke="#f7768e" stroke-width="1" transform="rotate(45 25 25)"/>
   </svg>
@@ -90,6 +90,14 @@
           <a routerLink="/juegos/mayor-menor" routerLinkActive="active-link"
              class="nav-dropdown-item">
             🃏 Mayor o Menor
+          </a>
+          <a routerLink="/juegos/preguntados" routerLinkActive="active-link"
+             class="nav-dropdown-item">
+            🧠 Preguntados
+          </a>
+          <a routerLink="/juegos/path-of-the-knight" routerLinkActive="active-link"
+             class="nav-dropdown-item">
+            ♞ Path of the Knight
           </a>
         </div>
       </div>
@@ -162,6 +170,12 @@
       <a routerLink="/juegos/mayor-menor" routerLinkActive="active-link"
          (click)="menuOpen = false"
          class="font-mono text-sm tracking-wider transition-colors pl-3" style="color: #565f89">🃏 Mayor o Menor</a>
+      <a routerLink="/juegos/preguntados" routerLinkActive="active-link"
+         (click)="menuOpen = false"
+         class="font-mono text-sm tracking-wider transition-colors pl-3" style="color: #565f89">🧠 Preguntados</a>
+      <a routerLink="/juegos/path-of-the-knight" routerLinkActive="active-link"
+         (click)="menuOpen = false"
+         class="font-mono text-sm tracking-wider transition-colors pl-3" style="color: #565f89">♞ Path of the Knight</a>
 
       <div class="h-px my-1" style="background: rgba(86,95,137,0.15)"></div>
 
@@ -197,7 +211,7 @@
 <footer class="py-6 text-center"
         style="background: rgba(26,27,38,0.9); border-top: 1px solid rgba(122,162,247,0.1)">
   <p class="font-mono text-xs tracking-widest" style="color: #565f89">
-    🕹️ El Cyber de Cato &nbsp;|&nbsp; UTN — Programación IV &nbsp;|&nbsp; Sprint 3
+    🕹️ El Cyber de Cato &nbsp;|&nbsp; UTN — Programación IV &nbsp;|&nbsp; Sprint 4
   </p>
 </footer>
 
