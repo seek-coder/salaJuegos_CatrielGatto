@@ -34,7 +34,6 @@ export class TriviaService {
   }
 
   private generarPreguntas(paises: PaisAPI[], cantidad: number): Pregunta[] {
-    // Filtrar países que tengan traducción al español y bandera
     const paisesValidos = paises.filter(
       p => p.translations?.spa?.common && p.flags?.png
     );
@@ -50,14 +49,12 @@ export class TriviaService {
       const paisCorrecto = paisesValidos[idx];
       const nombreCorrecto = paisCorrecto.translations.spa!.common;
 
-      // Generar 3 opciones incorrectas únicas
       const incorrectas = this.obtenerIncorrectas(paisesValidos, idx, 3);
 
       if (incorrectas.length < 3) continue;
 
       const opciones = this.mezclar([nombreCorrecto, ...incorrectas]);
 
-      // Determinar dificultad según la "popularidad" del país
       const dificultad = this.calcularDificultad(paisCorrecto);
 
       preguntas.push({
