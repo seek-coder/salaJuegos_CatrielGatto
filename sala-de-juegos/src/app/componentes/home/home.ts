@@ -41,8 +41,8 @@ export class HomeComponent {
     },
     {
       nombre: 'Preguntados',
-      descripcion: 'Respondé preguntas de trivia contra el reloj.',
-      icono: '🧠',
+      descripcion: 'Identificá banderas de países del mundo en esta trivia visual.',
+      icono: '🌍',
       ruta: '/juegos/preguntados',
       disponible: true,
       color: 'amber'

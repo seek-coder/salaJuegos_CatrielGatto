@@ -2,10 +2,10 @@
   <div class="max-w-3xl mx-auto">
 
     <div class="text-center mb-10">
-      <div class="text-5xl mb-4">🧠</div>
+      <div class="text-5xl mb-4">🌍</div>
       <p class="font-mono text-xs tracking-[0.4em] uppercase mb-2" style="color: #9ece6a">// Juego</p>
       <h1 class="font-mono text-3xl font-black tracking-widest" style="color: #a9b1d6">PREGUNTADOS</h1>
-      <p class="font-mono text-xs mt-2" style="color: #565f89">Trivia de Videojuegos, ¡EN INGLÉS!</p>
+      <p class="font-mono text-xs mt-2" style="color: #565f89">Trivia de Banderas del Mundo 🏳️</p>
     </div>
 
     @if (estado() === 'cargando' && !errorCarga()) {
@@ -59,10 +59,18 @@
                   style="border: 1px solid; background: rgba(26,27,38,0.6)">
               {{ dificultadTexto(p.dificultad) }}
             </span>
-            <span class="font-mono text-xs" style="color: #565f89">🎮 Video Games</span>
+            <span class="font-mono text-xs" style="color: #565f89">🌍 Geografía</span>
           </div>
 
-          <h2 class="font-mono text-lg md:text-xl font-bold leading-relaxed mb-8" style="color: #a9b1d6">
+          <!-- Imagen de la bandera -->
+          <div class="bandera-container mb-6">
+            <img [src]="p.imagenUrl"
+                 [alt]="'Bandera misteriosa'"
+                 class="bandera-img"
+                 loading="eager" />
+          </div>
+
+          <h2 class="font-mono text-lg md:text-xl font-bold leading-relaxed mb-8 text-center" style="color: #a9b1d6">
             {{ p.texto }}
           </h2>
 
